@@ -1,0 +1,3 @@
+.createElement
+.setAttribute
+.appendChild
