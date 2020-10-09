@@ -15,18 +15,18 @@
   <body>
 
     <nav class="navbar navbar-expand-lg navbar-light">
-      <div class="highscore-nav d-flex bd-highlight mb-2" style="color: darkcyan; font-family: 'Permanent Marker', cursive;">VIEW HIGHSCORES</div>
-      <div class="timer ml-auto p-2 bd-highlight" style="color: darkcyan; font-family: 'Permanent Marker', cursive;">Timer:</div>
+      <a href="/04_web_api_code_quiz/highscores.html" class="highscore-nav d-flex bd-highlight mb-2" style="color: darkcyan; font-family: 'Permanent Marker', cursive;">VIEW HIGHSCORES</a>
+      <div class="timer ml-auto p-2 bd-highlight" id="timer" style="color: darkcyan; font-family: 'Permanent Marker', cursive;">Timer:</div>
       </div>
     </nav>
 
     <section class="container">
-      <div class="row">
+      <div class="row text-center">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="card-body">
-            <h5 class="card-title" style="color: darkcyan; font-family: 'Permanent Marker', cursive;">Coding Quiz Challenge</h5>
-            <p class="card-text" style="font-family: 'Lato', sans-serif;">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <div class="btn btn-secondary" style="font-family: 'Lato', sans-serif;">Start</div>
+            <h5 class="card-title mb-4" style="color: darkcyan; font-family: 'Permanent Marker', cursive; font-size: xx-large;">Coding Quiz Challenge</h5>
+            <p class="card-text mb-5" style="font-family: 'Lato', sans-serif;">Try to answer the following code-related questions within the time limit. The time that is left on the clck when you answer the last question will be your score. Remember that each incorrect answer will penalize your score by 10 seconds! Good luck!</p>
+            <div class="btn btn-secondary"  id="start-button" style="font-family: 'Lato', sans-serif;">Start Quiz</div>
           </div>
           </div>
       </div>
