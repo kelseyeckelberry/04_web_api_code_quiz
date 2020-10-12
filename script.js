@@ -45,8 +45,7 @@ var questions =
 ];
 
 //Functions
-function startQuiz(e) {
-    e.preventDefault();
+function startQuiz(event) {
     startScrn.setAttribute("style", "display: none !important");
     questionScrn.setAttribute("style", "display: block !important");
 
@@ -57,11 +56,18 @@ function startQuiz(e) {
         choiceBtn.textContent = choiceValue;
         choices.appendChild(choiceBtn);
     })
+    if (timeLeft < 60) {
+        event.preventDefault();
+    } else {
+        timerEl.textContent = "Time: " + timeLeft;
+        timerEl.append();
+        timer();
+    }
 };
 
 function selectAnswer(e){
     e.preventDefault();
-    choiceIndex.on("click", function() {
+    choiceBtn.on("click", function() {
     currentIndex++;
     });
     
@@ -73,8 +79,19 @@ function selectAnswer(e){
     }   
     //When an answer is clicked
     //currentIndex++
-}
-//Timer Element
+};
+
+function timer() {
+    var timerInterval = setInterval(function(){
+        timeLeft--;
+        timerEl.textContent = "Time: " + timeLeft;
+
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            timerEl.textContent = "Out of time!";
+        }
+    }, 1000);
+};
 
 startBtn.addEventListener("click", startQuiz);
 
