@@ -20,12 +20,22 @@ var score = 0;
 var questions = [
   {
     ques: "Commonly used data types DO NOT include:",
-    options: ["booleans", "numbers", "alerts", "strings"],
+    options: [
+        "booleans", 
+        "numbers", 
+        "alerts", 
+        "strings"
+    ],
     correctOpt: "alerts",
   },
   {
     ques: "The condition in an if / else statement is enclosed within _______.",
-    options: ["quotes", "curly brackets", "parentheses", "square brackets"],
+    options: [
+        "quotes", 
+        "curly brackets", 
+        "parentheses", 
+        "square brackets"
+    ],
     correctOpt: "parentheses",
   },
   {
@@ -41,13 +51,23 @@ var questions = [
   {
     ques:
       "String values must be enclosed within _____ when being assigned to variables.",
-    options: ["commmas", "curly brackets", "quotes", "parentheses"],
+    options: [
+        "commmas", 
+        "curly brackets", 
+        "quotes", 
+        "parentheses"
+    ],
     correctOpt: "quotes",
   },
   {
     ques:
       "A very useful tool used during development and debugging for printing content to the debugger is:",
-    options: ["Javascript", "terminal / bash", "for loops", "console.log"],
+    options: [
+        "Javascript", 
+        "terminal / bash", 
+        "for loops", 
+        "console.log"
+    ],
     correctOpt: "console.log",
   },
 ];
@@ -63,59 +83,61 @@ function startQuiz() {
     }
     timer();
     addQuestion();
-})
-};
+  });
+}
 
 function addQuestion() {
-    startScrn.setAttribute("style", "display: none !important");
-    questionScrn.setAttribute("style", "display: block !important");
-    question.textContent = questions[currentIndex].ques;
-    for (var i = 0; i < questions[currentIndex].options.length; i++) {
-        choiceBtn.textContent = questions[currentIndex].options[i];  
-    }
+  startScrn.setAttribute("style", "display: none !important");
+  questionScrn.setAttribute("style", "display: block !important");
+  
+  question.textContent = questions[currentIndex].ques;
+  
+  for (var i = 0; i < questions[currentIndex].options.length; i++) {
+    choiceBtn.innerHTML = "<button type='button' class='btn btn-secondary'>" + questions[currentIndex].options[i] + "</button>";
+  }
 };
 
 choiceBtn.addEventListener("click", function selectAnswer(event) {
-    event.preventDefault();
-    if (questions[currentIndex].correctOpt === event.target.textContent) {
-      correctAns.setAttribute("style", "display: block !important");
-      incorrectAns.setAttribute("style", "display: none !important");
-      currentIndex++;
-    } else {
-      incorrectAns.setAttribute("style", "display: block !important");
-      correctAns.setAttribute("style", "display: none !important");
-      timeLeft = timeLeft - 10;
-      currentIndex++;
-    }
-    if (currentIndex > 4) {
-      endQuiz();
-      stopTimer();
-    } else {
-      addQuestion();
-    }
+  event.preventDefault();
+  if (questions[currentIndex].correctOpt === event.target.textContent) {
+    correctAns.setAttribute("style", "display: block !important");
+    incorrectAns.setAttribute("style", "display: none !important");
+    currentIndex++;
+  } else {
+    incorrectAns.setAttribute("style", "display: block !important");
+    correctAns.setAttribute("style", "display: none !important");
+    timeLeft = timeLeft - 10;
+    currentIndex++;
+  }
+  if (currentIndex > 4) {
+    endQuiz();
+    stopTimer();
+  } else {
+    addQuestion();
+  }
 });
 
 function timer() {
-    var timerInterval = setInterval(function () {
-      timeLeft--;
-      timerEl.textContent = "Time: " + timeLeft;
+  var timerInterval = setInterval(function () {
+    timeLeft--;
+    timerEl.textContent = "Time: " + timeLeft;
 
-      if (timeLeft <= 0) {
-        clearInterval(timerInterval);
-        timerEl.textContent = "Out of time!";
-      } 
-    }, 1000);
-};
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      timerEl.textContent = "Out of time!";
+    }
+  }, 1000);
+}
 
 function endQuiz() {
-    startScrn.setAttribute("style", "display: none !important");
-    questionScrn.setAttribute("style", "display: none !important");
-    doneScrn.setAttribute("style", "display: block !important");
-    yourScore.textContent = "Your final score is " + timeLeft;
-};
+  startScrn.setAttribute("style", "display: none !important");
+  questionScrn.setAttribute("style", "display: none !important");
+  doneScrn.setAttribute("style", "display: block !important");
+  yourScore.textContent = "Your final score is " + timeLeft;
+}
 
 function stopTimer() {
-    clearTimeout(timerEl);
+  clearTimeout(timerEl);
 }
 
 startQuiz();
