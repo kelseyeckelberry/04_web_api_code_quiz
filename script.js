@@ -69,31 +69,29 @@ function startQuiz() {
 function addQuestion() {
     startScrn.setAttribute("style", "display: none !important");
     questionScrn.setAttribute("style", "display: block !important");
-
+    question.textContent = questions[currentIndex].ques;
     for (var i = 0; i < questions[currentIndex].options.length; i++) {
-        question.textContent = questions[currentIndex].ques;
-        document.querySelector(".choice").innerHTML =
-        "<button type='button' class='btn btn-secondary'>" +
-        questions[currentIndex].options[i] +
-        "</button>";
+        choiceBtn.textContent = questions[currentIndex].options[i];  
     }
 };
 
 choiceBtn.addEventListener("click", function selectAnswer(event) {
     event.preventDefault();
-    console.log("Button selected" + event.target.textContent);
-    if (questions.correctOpt === event.target.textContent) {
+    if (questions[currentIndex].correctOpt === event.target.textContent) {
       correctAns.setAttribute("style", "display: block !important");
+      incorrectAns.setAttribute("style", "display: none !important");
       currentIndex++;
     } else {
       incorrectAns.setAttribute("style", "display: block !important");
+      correctAns.setAttribute("style", "display: none !important");
       timeLeft = timeLeft - 10;
       currentIndex++;
     }
     if (currentIndex > 4) {
       endQuiz();
+      stopTimer();
     } else {
-      startQuiz();
+      addQuestion();
     }
 });
 
@@ -105,7 +103,7 @@ function timer() {
       if (timeLeft <= 0) {
         clearInterval(timerInterval);
         timerEl.textContent = "Out of time!";
-      }
+      } 
     }, 1000);
 };
 
@@ -115,5 +113,9 @@ function endQuiz() {
     doneScrn.setAttribute("style", "display: block !important");
     yourScore.textContent = "Your final score is " + timeLeft;
 };
+
+function stopTimer() {
+    clearTimeout(timerEl);
+}
 
 startQuiz();
