@@ -1,12 +1,15 @@
 var timerEl = document.querySelector("#timer");
 var timeLeft = 60;
 var startBtn = document.querySelector("#start-button");
-var choiceBtn = document.querySelector("#choices");
+var opt1 = document.querySelector("#opt1");
+var opt2 = document.querySelector("#opt2");
+var opt3 = document.querySelector("#opt3");
+var opt4 = document.querySelector("#opt4");
 var startScrn = document.querySelector("#start-screen");
 var questionScrn = document.querySelector("#question-screen");
 var doneScrn = document.querySelector("#done-screen");
 var question = document.querySelector("#questions");
-var choices = document.querySelector("#choices");
+var choiceBtn = document.querySelector("#choices");
 var correctAns = document.querySelector("#correctAns");
 var incorrectAns = document.querySelector("#incorrectAns");
 var highScores = document.querySelector(".highScores");
@@ -92,29 +95,30 @@ function addQuestion() {
   
   question.textContent = questions[currentIndex].ques;
   
-  for (var i = 0; i < questions[currentIndex].options.length; i++) {
-    choiceBtn.innerHTML = "<button type='button' class='btn btn-secondary'>" + questions[currentIndex].options[i] + "</button>";
-  }
+opt1.innerHTML = "<button type='button' class='btn btn-secondary'>" + questions[currentIndex].options[0];
+opt2.innerHTML = "<button type='button' class='btn btn-secondary'>" + questions[currentIndex].options[1];
+opt3.innerHTML = "<button type='button' class='btn btn-secondary'>" + questions[currentIndex].options[2];
+opt4.innerHTML = "<button type='button' class='btn btn-secondary'>" + questions[currentIndex].options[3];
 };
 
-choiceBtn.addEventListener("click", function selectAnswer(event) {
-  event.preventDefault();
-  if (questions[currentIndex].correctOpt === event.target.textContent) {
-    correctAns.setAttribute("style", "display: block !important");
-    incorrectAns.setAttribute("style", "display: none !important");
-    currentIndex++;
-  } else {
-    incorrectAns.setAttribute("style", "display: block !important");
-    correctAns.setAttribute("style", "display: none !important");
-    timeLeft = timeLeft - 10;
-    currentIndex++;
-  }
-  if (currentIndex > 4) {
-    endQuiz();
-    stopTimer();
-  } else {
-    addQuestion();
-  }
+choiceBtn.addEventListener("click", function selectAnswer (event) {
+    event.preventDefault();
+    if (questions[currentIndex].correctOpt === event.target.textContent) {
+        correctAns.setAttribute("style", "display: block !important");
+        incorrectAns.setAttribute("style", "display: none !important");
+        currentIndex++;
+    } else {
+        incorrectAns.setAttribute("style", "display: block !important");
+        correctAns.setAttribute("style", "display: none !important");
+        timeLeft = timeLeft - 10;
+        currentIndex++;
+    }
+    if (currentIndex > 4) {
+        endQuiz();
+        stopTimer();
+    } else {
+        addQuestion();
+    }
 });
 
 function timer() {
@@ -125,6 +129,8 @@ function timer() {
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
       timerEl.textContent = "Out of time!";
+    } else if (currentIndex > 4) {
+        clearTimeout(timerInterval);
     }
   }, 1000);
 }
@@ -134,10 +140,6 @@ function endQuiz() {
   questionScrn.setAttribute("style", "display: none !important");
   doneScrn.setAttribute("style", "display: block !important");
   yourScore.textContent = "Your final score is " + timeLeft;
-}
-
-function stopTimer() {
-  clearTimeout(timerEl);
 }
 
 startQuiz();
